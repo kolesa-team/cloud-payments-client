@@ -13,5 +13,5 @@ composer require kolesa-team/cloud-payments-client
 $client = new \CloudPayments\Manager($publicKey, $privateKey);
 $transaction = $client->chargeToken($amount, $currency, $accountId, $cardToken);
 
-print $transaction->getId();
+echo $transaction->getId();
 ```
