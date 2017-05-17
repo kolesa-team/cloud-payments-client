@@ -5,7 +5,7 @@
 
 ## Установка
 ```bash
-composer require troytft/cloud-payments-client
+composer require kolesa-team/cloud-payments-client
 ```
 
 ## Использование
