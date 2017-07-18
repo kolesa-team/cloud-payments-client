@@ -185,6 +185,11 @@ class Transaction
     protected $token;
 
     /**
+     * @var string
+     */
+    protected $jsonData;
+
+    /**
      * @return integer
      */
     public function getId()
@@ -869,6 +874,39 @@ class Transaction
     }
 
     /**
+     * @return array
+     */
+    public function getJsonData()
+    {
+        return json_decode($this->jsonData, true);
+    }
+
+    /**
+     * @param string $jsonData
+     * @return $this
+     */
+    public function setJsonData($jsonData)
+    {
+        $this->jsonData = $jsonData;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getRememberCard()
+    {
+        $data = $this->getJsonData();
+
+        if (!empty($data) && !empty($data['RememberCard']) && $data['RememberCard'] == 'true') {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @param $params
      * @return Transaction
      */
@@ -888,9 +926,9 @@ class Transaction
         if (isset($params['InvoiceId'])) {
             $transaction->setInvoiceId($params['InvoiceId']);
         }
-        
+
         if (isset($params['AccountId'])) {
-            $transaction->setAccountId(['AccountId']);
+            $transaction->setAccountId($params['AccountId']);
         }
 
         if (isset($params['Email'])) {
@@ -995,6 +1033,10 @@ class Transaction
 
         if (isset($params['Token'])) {
             $transaction->setToken($params['Token']);
+        }
+
+        if (isset($params['JsonData'])) {
+            $transaction->setJsonData($params['JsonData']);
         }
 
         return $transaction;
