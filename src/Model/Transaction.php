@@ -917,11 +917,14 @@ class Transaction
         $transaction->setId($params['TransactionId']);
         $transaction->setAmount($params['Amount']);
         $transaction->setCurrency($params['Currency']);
-        $transaction->setCurrencyCode($params['CurrencyCode']);
         $transaction->setCardFirstSix($params['CardFirstSix']);
         $transaction->setCardLastFour($params['CardLastFour']);
         $transaction->setCardExpiredMonth(explode('/', $params['CardExpDate'])[0]);
         $transaction->setCardExpiredYear(substr(date('Y'), 0, 2) . explode('/', $params['CardExpDate'])[1]);
+
+        if (isset($params['CurrencyCode'])) {
+            $transaction->setCurrencyCode($params['CurrencyCode']);
+        }
 
         if (isset($params['InvoiceId'])) {
             $transaction->setInvoiceId($params['InvoiceId']);
