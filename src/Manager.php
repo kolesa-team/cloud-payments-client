@@ -82,7 +82,7 @@ class Manager
     public function test()
     {
         $response = $this->sendRequest('/test');
-        if (array_key_exists('Success', $response) && !$response['Success']) {
+        if (!$response['Success']) {
             throw new Exception\RequestException($response);
         }
     }
@@ -112,11 +112,11 @@ class Manager
 
         $response = $this->sendRequest($endpoint, array_merge($defaultParams, $params));
 
-        if (array_key_exists('Success', $response) && $response['Success']) {
+        if ($response['Success']) {
             return Model\Transaction::fromArray($response['Model']);
         }
 
-        if (array_key_exists('Message', $response) && $response['Message']) {
+        if ($response['Message']) {
             throw new Exception\RequestException($response);
         }
 
@@ -124,11 +124,7 @@ class Manager
             throw new Exception\PaymentException($response);
         }
 
-        if (array_key_exists('Model', $response)) {
-            return Model\Required3DS::fromArray($response['Model']);
-        }
-
-        throw new Exception\RequestException(['Message' => 'Undefined error']);
+        return Model\Required3DS::fromArray($response['Model']);
     }
 
     /**
@@ -154,11 +150,11 @@ class Manager
 
         $response = $this->sendRequest($endpoint, array_merge($defaultParams, $params));
 
-        if (array_key_exists('Success', $response) && $response['Success']) {
+        if ($response['Success']) {
             return Model\Transaction::fromArray($response['Model']);
         }
 
-        if (array_key_exists('Message', $response) && $response['Message']) {
+        if ($response['Message']) {
             throw new Exception\RequestException($response);
         }
 
@@ -166,11 +162,7 @@ class Manager
             throw new Exception\PaymentException($response);
         }
 
-        if (array_key_exists('Model', $response)) {
-            return Model\Required3DS::fromArray($response['Model']);
-        }
-
-        throw new Exception\RequestException(['Message' => 'Undefined error']);
+        return Model\Required3DS::fromArray($response['Model']);
     }
 
     /**
@@ -187,7 +179,7 @@ class Manager
             'PaRes' => $token
         ]);
 
-        if (array_key_exists('Message', $response) && $response['Message']) {
+        if ($response['Message']) {
             throw new Exception\RequestException($response);
         }
 
@@ -210,7 +202,7 @@ class Manager
             'Amount' => $amount
         ]);
 
-        if (array_key_exists('Success', $response) && !$response['Success']) {
+        if (!$response['Success']) {
             throw new Exception\RequestException($response);
         }
     }
@@ -225,7 +217,7 @@ class Manager
             'TransactionId' => $transactionId
         ]);
 
-        if (array_key_exists('Success', $response) && !$response['Success']) {
+        if (!$response['Success']) {
             throw new Exception\RequestException($response);
         }
     }
@@ -242,7 +234,7 @@ class Manager
             'Amount' => $amount
         ]);
 
-        if (array_key_exists('Success', $response) && !$response['Success']) {
+        if (!$response['Success']) {
             throw new Exception\RequestException($response);
         }
     }
@@ -258,7 +250,7 @@ class Manager
             'InvoiceId' => $invoiceId
         ]);
 
-        if (array_key_exists('Success', $response) && !$response['Success']) {
+        if (!$response['Success']) {
             throw new Exception\RequestException($response);
         }
 
@@ -282,7 +274,7 @@ class Manager
             'TimeZone' => $timezone
         ]);
 
-        if (array_key_exists('Success', $response) && !$response['Success']) {
+        if (!$response['Success']) {
             throw new Exception\RequestException($response);
         }
 
