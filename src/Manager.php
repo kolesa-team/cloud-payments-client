@@ -25,13 +25,19 @@ class Manager
     protected $privateKey;
 
     /**
+     * @var int|null
+     */
+    protected $timeout;
+
+    /**
      * @param $publicKey
      * @param $privateKey
      */
-    public function __construct($publicKey, $privateKey)
+    public function __construct($publicKey, $privateKey, $timeout = null)
     {
-        $this->publicKey = $publicKey;
+        $this->publicKey  = $publicKey;
         $this->privateKey = $privateKey;
+        $this->timeout    = $timeout;
     }
 
     /**
@@ -53,11 +59,15 @@ class Manager
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
 
+        if ($this->timeout !== null) {
+            curl_setopt($curl, CURLOPT_TIMEOUT, (int) $this->timeout);
+        }
+
         $result = curl_exec($curl);
 
         curl_close($curl);
 
-        return (array)json_decode($result, true);
+        return (array) json_decode($result, true);
     }
 
     /**
